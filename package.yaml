@@ -1,0 +1,11 @@
+name:                advent2020
+version:             0.1.0.0
+github:              "oguimbal/advent2020"
+license:             BSD3
+author:              "Olivier guimabl"
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: .
