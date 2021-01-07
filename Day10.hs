@@ -1,4 +1,4 @@
-module Day9 where
+module Day10 where
 
 import Data.List
 
