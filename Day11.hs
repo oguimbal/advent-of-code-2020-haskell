@@ -1,5 +1,6 @@
 module Day11 where
 
+import Utils
 import Data.List (intercalate)
 import Data.Maybe
 import qualified Data.Vector as V
@@ -16,7 +17,7 @@ toChar Floor = '.'
 toChar Occupied = '#'
 toChar Empty = 'L'
 
-type Pos = (Int, Int)
+
 
 type Dim = Pos
 
@@ -73,8 +74,7 @@ directions =
 
 -- Get adjascent cells
 adjascents :: Lookup
-adjascents p m = mapMaybe ((`getSafe` m) . add p) directions
-
+adjascents p m = mapMaybe ((`getSafe` m) . (+) p) directions
 
 toList :: Map -> [(Pos, Cell)]
 toList m = zip pos (V.toList $ cells m)
@@ -93,7 +93,7 @@ fromList p c =
     }
 
 -- step :: Map -> Map
-step :: (Pos -> Map -> [Cell])  -> Int -> Map -> Map
+step :: (Pos -> Map -> [Cell]) -> Int -> Map -> Map
 step fn n m =
   let trans :: (Pos, Cell) -> Cell
       trans (p, c)
@@ -131,21 +131,19 @@ part1 =
 
 ------------------------- PART 2
 
-add :: Pos -> Pos -> Pos
-add (x, y) (a, b) = (x + a, y + b)
+
 
 firstSeat :: Pos -> Map -> Pos -> Maybe Cell
 firstSeat p m d =
-  let p' = p `add` d
+  let p' = p + d
       ret = getSafe p' m
    in case ret of
         Just Floor -> firstSeat p' m d
         _ -> ret
 
-
 firstSeatPos :: Pos -> Map -> Pos -> Maybe Pos
 firstSeatPos d m p =
-  let p' = p `add` d
+  let p' = p + d
       ret = getSafe p' m
    in case ret of
         Just Floor -> firstSeatPos d m p'
